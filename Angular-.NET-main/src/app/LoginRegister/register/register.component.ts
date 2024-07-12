@@ -57,10 +57,11 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('confirmPassword') as FormControl;
   }
   OnSubmit(){
-
+    console.log('before');
       this.formValid = true;
       if(this.registerForm.valid)
       {
+        console.log('after');
         let register = this.registerForm.value;
         register.userType = 'user';
         this.service.registerUser(register).subscribe((data:any)=>{

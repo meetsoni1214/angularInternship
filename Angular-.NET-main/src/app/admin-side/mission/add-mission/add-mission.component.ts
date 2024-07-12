@@ -79,7 +79,7 @@ export class AddMissionComponent implements OnInit {
 
   CountryList() {
     this.service.CountryList().subscribe((data: any) => {
-      if (data.result == 1) {
+      if (data.status == "Success") {
         this.countryList = data.data;
       } else {
         this.toast.error({ detail: "ERROR", summary: data.message, duration: 3000 });
@@ -90,7 +90,7 @@ export class AddMissionComponent implements OnInit {
   CityList(countryId: any) {
     countryId = countryId.target.value;
     this.service.CityList(countryId).subscribe((data: any) => {
-      if (data.result == 1) {
+      if (data.status == "Success") {
         this.cityList = data.data;
       } else {
         this.toast.error({ detail: "ERROR", summary: data.message, duration: 3000 });

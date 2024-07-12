@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { MissionApplication } from '../model/missionApplication.model';
 import { MissionTheme } from '../model/missionTheme.model';
 import { MissionSkill } from '../model/missionSkill.model';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,8 +19,8 @@ export class AdminsideServiceService {
     public router: Router
   ) {}
   // apiUrl:string='http://localhost:63943/api';
-  apiUrl: string = 'http://localhost:56577/api';
-  imageUrl: string = 'http://localhost:56577';
+  apiUrl: string = 'http://localhost:5140/api';
+  imageUrl: string = 'http://localhost:5140';
 
   //User
   UserList(): Observable<any[]> {
@@ -76,9 +78,9 @@ export class AdminsideServiceService {
   CityList(countryId: any): Observable<City[]> {
     return this.http.get<City[]>(`${this.apiUrl}/Common/CityList/${countryId}`);
   }
-  AddMission(data: Mission) {
-    return this.http.post(`${this.apiUrl}/Mission/AddMission`, data);
-  }
+  AddMission(data: Mission) {     
+    return this.http.post(`${this.apiUrl}/Mission/AddMission`, data).pipe(catchError((error: any) => {         console.error('AddMission error:', error);         this.toastr.error('An error occurred while adding the mission.', 'Error');        
+       return throwError(error); }) ); }
   UpdateMission(data: Mission) {
     return this.http.post(`${this.apiUrl}/Mission/UpdateMission`, data);
   }
